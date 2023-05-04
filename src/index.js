@@ -1,5 +1,6 @@
 import './css/styles.css';
 import Notiflix from 'notiflix';
+import debounce from 'lodash.debounce';
 
 const DEBOUNCE_DELAY = 300;
 const BASE_URL = 'https://restcountries.com/v3.1/name/';
@@ -8,11 +9,10 @@ const inputEl = document.querySelector('#search-box');
 const countriesListEl = document.querySelector('.country-list');
 const countryInfoEl = document.querySelector('.country-info');
 
-inputEl.addEventListener('input', onInput);
+inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput(evt) {
-  console.dir(evt.target);
-  const inputText = evt.target.value;
+  const inputText = evt.target.value.trim();
   if (inputText) {
     const URL = `${BASE_URL}${inputText}`;
     fetchCountries(URL);
@@ -36,6 +36,7 @@ function fetchCountries(name) {
     .catch(error => {
       console.log(error);
       countriesListEl.innerHTML = '';
+      countryInfoEl.innerHTML = '';
       //   Notiflix.Notify.failure('Oops, there is no country with that name');
     });
 }
@@ -45,6 +46,7 @@ function setCountries(countries) {
 
   if (arrLength > 10) {
     countriesListEl.innerHTML = '';
+    countryInfoEl.innerHTML = '';
     return Notiflix.Notify.info(
       'Too many matches found. Please enter a more specific name.'
     );
@@ -64,10 +66,10 @@ function setCountries(countries) {
 function markupList(arrCountries) {
   const markup = arrCountries
     .map(
-      ({ flags: { png, alt }, name: { common } }) =>
-        `<li>
-        <img src="${png}" alt="${alt}" width=50>
-        <p>${common}</p>
+      ({ flags: { svg, alt }, name: { official } }) =>
+        `<li class="country-list__item">
+        <img class="country-list__image" src="${svg}" alt="${alt}" width="20">
+        <p class="country-list__text">${official}</p>
       </li>`
     )
     .join('');
@@ -76,8 +78,8 @@ function markupList(arrCountries) {
 
 function markupInfo(arrCountries) {
   const {
-    flags: { png, alt },
-    name: { common },
+    flags: { svg, alt },
+    name: { official },
     capital,
     population,
     languages,
@@ -87,8 +89,8 @@ function markupInfo(arrCountries) {
   const languagesString = Object.values(languages).join(', ');
 
   const markup = `<div class="title-container">
-      <img class="title-img" src="${png}" alt="${alt}" />
-      <h2 class="title-info">${common}</h2>
+      <img class="title-img" src="${svg}" alt="${alt}" width="100">
+      <h2 class="title-info">${official}</h2>
     </div>
     <ul class="list-info">
       <li><span class="list-info__property">Capital: </span>${capitalString}</li>

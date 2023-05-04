@@ -10,6 +10,7 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+  padding: 20px;
 }
 
 #search-box {
@@ -18,3 +19,66 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+
+.country-list {
+  display: none;
+  list-style: none;
+
+}
+
+.country-list__image {
+
+}
+
+.country-list__text {
+
+}
+
+.country-info {
+  /* display: flex; */
+  flex-direction: column;
+  gap: 30px;
+  display: none;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.title-img {
+  width: 100%;
+  max-width: 75px;
+  height: 100%;
+
+}
+
+.title-info{
+  font-size: 50px;
+  margin: 0;
+}
+
+.list-info{
+  font-size: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list-info__property{
+  font-weight: 700;
+}
+/* <div class="title-container">
+      <img class="title-img" src="${svg}" alt="${alt}" width="100" />
+      <h2 class="title-info">${official}</h2>
+    </div>
+    <ul class="list-info">
+      <li><span class="list-info__property">Capital: </span>${capitalString}</li>
+      <li><span class="list-info__property">Population: </span>${population}</li>
+      <li><span class="list-info__property">Languages: </span>${languagesString}</li></ul>
+
+<li class="country-list__item">
+  <img class="country-list__image" src="${svg}" alt="${alt}" width="20">
+  <p class="country-list__text">${official}</p>
+</li> */
