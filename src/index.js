@@ -35,14 +35,11 @@ function fetchCountries(name) {
       }
       return response.json();
     })
-    .then(countries => {
-      console.log('FETCH:', countries), setCountries(countries);
-    })
+    .then(countries => setCountries(countries))
     .catch(error => {
       console.log(error);
       countriesListEl.innerHTML = '';
       countryInfoEl.innerHTML = '';
-      //   Notiflix.Notify.failure('Oops, there is no country with that name');
     });
 }
 
