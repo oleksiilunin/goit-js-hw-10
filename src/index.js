@@ -13,6 +13,11 @@ inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput(evt) {
   const inputText = evt.target.value.trim();
+  if (!inputText) {
+    countriesListEl.innerHTML = '';
+    countryInfoEl.innerHTML = '';
+  }
+
   if (inputText) {
     const URL = `${BASE_URL}${inputText}`;
     fetchCountries(URL);
@@ -54,11 +59,19 @@ function setCountries(countries) {
 
   if (arrLength > 1 && arrLength <= 10) {
     countryInfoEl.innerHTML = '';
+    countryInfoEl.style.display = 'none';
+
+    countriesListEl.style.display = 'flex';
+    countriesListEl.style.flexDirection = 'column';
+
     return (countriesListEl.innerHTML = markupList(countries));
   }
 
   if (arrLength === 1) {
     countriesListEl.innerHTML = '';
+    countriesListEl.style.display = 'none';
+    countryInfoEl.style.display = 'flex';
+
     return (countryInfoEl.innerHTML = markupInfo(countries));
   }
 }
@@ -93,9 +106,9 @@ function markupInfo(arrCountries) {
       <h2 class="title-info">${official}</h2>
     </div>
     <ul class="list-info">
-      <li><span class="list-info__property">Capital: </span>${capitalString}</li>
-      <li><span class="list-info__property">Population: </span>${population}</li>
-      <li><span class="list-info__property">Languages: </span>${languagesString}</li>
+      <li class="list-info__item"><span class="list-info__property">Capital: </span>${capitalString}</li>
+      <li class="list-info__item"><span class="list-info__property">Population: </span>${population}</li>
+      <li class="list-info__item"><span class="list-info__property">Languages: </span>${languagesString}</li>
     </ul>`;
   return markup;
 }
